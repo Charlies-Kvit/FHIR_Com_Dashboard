@@ -1,4 +1,3 @@
-from waitress import serve
 from data import db_session
 from flask_restful import Api
 from flask import Flask
@@ -10,6 +9,7 @@ import logging
 
 app = Flask(__name__)
 api = Api(app)
+# swagger = Swagger(app)
 logging.basicConfig(filename='logs/logs.log', filemode='w')
 logger = logging.getLogger('waitress')
 logger.setLevel(logging.DEBUG)
@@ -20,18 +20,15 @@ def ping():
     return {"answer": "pong!"}
 
 
-def main():
-    db_session.global_init(DATABASE)
-    api.add_resource(UserResource, "/api/users/<int:user_id>")
-    api.add_resource(UserListResource, "/api/users")
-    api.add_resource(GroupResource, "/api/groups/<int:group_id>")
-    api.add_resource(GroupListResource, "/api/groups")
-    api.add_resource(ParseRequestResource, "/api/parsing")
-    if DEBUG:
-        app.run(host=HOST, port=PORT, debug=DEBUG)
-    else:
-        serve(app, host=HOST, port=PORT)
+db_session.global_init(DATABASE)
+api.add_resource(UserResource, "/api/v0.1/users/<int:user_id>")
+api.add_resource(UserListResource, "/api/v0.1/users")
+api.add_resource(GroupResource, "/api/v0.1/groups/<int:group_id>")
+api.add_resource(GroupListResource, "/api/v0.1/groups")
+api.add_resource(ParseRequestResource, "/api/v0.1/parsing")
+api.init_app(app)
 
 
 if __name__ == '__main__':
-    main()
+    if DEBUG:
+        app.run(host=HOST, port=PORT, debug=DEBUG)

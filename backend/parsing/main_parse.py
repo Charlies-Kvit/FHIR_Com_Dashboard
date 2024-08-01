@@ -1,9 +1,8 @@
 import zulip
 from openai import OpenAI
-
+from config.config import API_KEY_AI
 
 def parse(emails):
-    API_KEY_AI = ""  # Добавить парсинг из виртуального окружения
     if len(emails) == 1:
         core = True
     else:

@@ -3,7 +3,7 @@ import time
 from flask_restful import abort, Resource, reqparse
 from .parse_result import ParseResult
 from flask import request
-from backend.parsing.main_parse import main
+from parsing.main_parse import main
 
 
 class ParseRequestResource(Resource):
