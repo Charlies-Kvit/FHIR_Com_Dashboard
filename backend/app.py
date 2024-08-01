@@ -21,11 +21,11 @@ def ping():
 
 
 db_session.global_init(DATABASE)
-api.add_resource(UserResource, "/api/v0.1/users/<int:user_id>")
-api.add_resource(UserListResource, "/api/v0.1/users")
-api.add_resource(GroupResource, "/api/v0.1/groups/<int:group_id>")
-api.add_resource(GroupListResource, "/api/v0.1/groups")
-api.add_resource(ParseRequestResource, "/api/v0.1/parsing")
+api.add_resource(UserResource, "/api/users/<int:user_id>")
+api.add_resource(UserListResource, "/api/users")
+api.add_resource(GroupResource, "/api/groups/<int:group_id>")
+api.add_resource(GroupListResource, "/api/groups")
+api.add_resource(ParseRequestResource, "/api/parsing")
 api.init_app(app)
 
 
