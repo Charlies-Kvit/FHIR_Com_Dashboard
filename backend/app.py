@@ -16,11 +16,6 @@ logger = logging.getLogger('waitress')
 logger.setLevel(logging.DEBUG)
 
 
-@app.route("/")
-def index():
-    return redirect(f"https://{SITE_IP}", code=302)
-
-
 @app.route("/ping")
 def ping():
     return {"answer": "pong!"}

@@ -9,7 +9,6 @@
 6. Create a file.env with the following contents in "config" directory:
 ```doctest
 HOST=0.0.0.0 # or 127.0.0.1
-SITE_IP=24.214.214.123 # host ip
 PORT=8080 # port number
 DEBUG=1 # 1 = True, 0 = False
 API_KEY_AI=adsdsafdsfads # API KEY from openai
