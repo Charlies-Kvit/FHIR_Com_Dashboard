@@ -58,7 +58,7 @@
   </nav>
 </section>
 
-<button class="fixed bottom-4 right-4 text-4xl md:hidden z-50" onclick={()=>is_open = !is_open}>
+<button class="fixed bottom-4 right-4 text-4xl lg:hidden z-50" onclick={()=>is_open = !is_open}>
   <span class="i-material-symbols-menu "></span>
 </button>
 
