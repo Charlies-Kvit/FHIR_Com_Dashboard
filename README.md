@@ -222,3 +222,15 @@ Example response:
     ]
 }
 ```
+<hr>
+
+### Other
+
+#### GET
+```/ping``` - just an Easter egg and a way to find out if the server is alive.<br> 
+Example response:
+```json
+{
+   "answer": "pong!"
+}
+```
