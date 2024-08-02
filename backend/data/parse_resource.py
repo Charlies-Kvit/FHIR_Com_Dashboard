@@ -7,7 +7,7 @@ from parsing.main_parse import main
 
 
 parser = reqparse.RequestParser()
-parser.add_argument("emails")
+parser.add_argument("emails", action="append")
 
 
 class ParseRequestResource(Resource):
