@@ -23,7 +23,7 @@ API_KEY_AI=adsdsafdsfads # API KEY from openai
 
 ## API documentation
 
-### Accaunt:
+### Account:
 #### GET:
 1. ```/api/accounts/<int:account_id>``` - get the data of a single account.<br>
    Example response:
