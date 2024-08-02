@@ -2,6 +2,7 @@ import zulip
 from openai import OpenAI
 from config.config import API_KEY_AI
 
+
 def parse(emails):
     if len(emails) == 1:
         core = True

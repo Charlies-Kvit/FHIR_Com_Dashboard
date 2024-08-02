@@ -7,3 +7,4 @@ waitress
 openai
 python-dotenv
 gunicorn
+flasgger

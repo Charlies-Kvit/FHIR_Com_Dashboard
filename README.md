@@ -1,10 +1,17 @@
 # FHIR_Com_Dashboard
 
-## Как запустить бэк
+## How to launch backend
 1. ```git clone https://github.com/Charlies-Kvit/FHIR_Com_Dashboard```
 2. ```pip install -r requirements.txt```
-3. Проверить наличие папки bd/ в папке backend/
-4. Запустить файл app.py(и не забыть DEBUG в backend/config/config.py поставить False, если в прод)
+3. Check the presence of the "bd/" and "logs/" folders in the "backend/" folder
+4. Create a file.env with the following contents in "config" directory:
+```doctest
+HOST=0.0.0.0 # or 127.0.0.1
+PORT=8080 # port number
+DEBUG=1 # 1 = True, 0 = False
+API_KEY_AI=adsdsafdsfads # API KEY from openai
+```
+5. For the test, you can simply run app.py
 
 ## How to run frontend(vite server)
 

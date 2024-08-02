@@ -1,6 +1,7 @@
+# from flasgger import Swagger
 from data import db_session
 from flask_restful import Api
-from flask import Flask
+from flask import Flask, redirect
 from data.user_resource import UserResource, UserListResource
 from data.dashboard_resource import GroupResource, GroupListResource
 from data.parse_resource import ParseRequestResource
@@ -15,6 +16,11 @@ logger = logging.getLogger('waitress')
 logger.setLevel(logging.DEBUG)
 
 
+@app.route("/")
+def index():
+    return redirect(f"https://{HOST}", code=302)
+
+
 @app.route("/ping")
 def ping():
     return {"answer": "pong!"}
@@ -27,7 +33,6 @@ api.add_resource(GroupResource, "/api/groups/<int:group_id>")
 api.add_resource(GroupListResource, "/api/groups")
 api.add_resource(ParseRequestResource, "/api/parsing")
 api.init_app(app)
-
 
 if __name__ == '__main__':
     if DEBUG:
