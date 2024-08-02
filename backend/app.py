@@ -12,13 +12,8 @@ app = Flask(__name__)
 api = Api(app)
 # swagger = Swagger(app)
 logging.basicConfig(filename='logs/logs.log', filemode='w')
-logger = logging.getLogger('waitress')
+logger = logging.getLogger('flask')
 logger.setLevel(logging.DEBUG)
-
-
-@app.route("/")
-def index():
-    return redirect(f"https://{SITE_IP}", code=302)
 
 
 @app.route("/ping")
