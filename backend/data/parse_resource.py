@@ -6,10 +6,14 @@ from flask import request
 from parsing.main_parse import main
 
 
+parser = reqparse.RequestParser()
+parser.add_argument("emails")
+
+
 class ParseRequestResource(Resource):
-    def get(self):
-        req = request.get_json()
-        emails = req["emails"]
+    def post(self):
+        args = parser.parse_args()
+        emails = args["emails"]
         """start_time = args["start_time"]
         end_time = args["end_time"]"""
         get_emails = []
