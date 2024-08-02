@@ -5,7 +5,7 @@ from flask import Flask, redirect
 from data.user_resource import UserResource, UserListResource
 from data.dashboard_resource import GroupResource, GroupListResource
 from data.parse_resource import ParseRequestResource
-from config.config import HOST, PORT, DEBUG, DATABASE
+from config.config import HOST, PORT, DEBUG, DATABASE, SITE_IP
 import logging
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ logger.setLevel(logging.DEBUG)
 
 @app.route("/")
 def index():
-    return redirect(f"https://{HOST}", code=302)
+    return redirect(f"https://{SITE_IP}", code=302)
 
 
 @app.route("/ping")
