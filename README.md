@@ -2,9 +2,11 @@
 
 ## How to launch backend
 1. ```git clone https://github.com/Charlies-Kvit/FHIR_Com_Dashboard```
-2. ```pip install -r requirements.txt```
-3. Check the presence of the "bd/" and "logs/" folders in the "backend/" folder
-4. Create a file.env with the following contents in "config" directory:
+2. ```python3 -m venv venv```
+3. Linux: ```source venv/bin/activate``` <br> Windows cmd: ```.\venv\Scripts\activate.bat``` <br> Windows PowerShell: ```.\venv\Scripts\activate.ps1```
+4. ```pip install -r requirements.txt```
+5. Check the presence of the "bd/" and "logs/" folders in the "backend/" folder
+6. Create a file.env with the following contents in "config" directory:
 ```doctest
 HOST=0.0.0.0 # or 127.0.0.1
 SITE_IP=24.214.214.123 # host ip
