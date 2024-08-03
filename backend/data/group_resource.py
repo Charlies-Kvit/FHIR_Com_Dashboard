@@ -4,7 +4,7 @@ from .groups import Groups
 from flask import abort, jsonify
 
 parser = reqparse.RequestParser()
-parser.add_argument("group_name")
+parser.add_argument("name")
 
 
 def abort_id_group_not_found(group_id):
@@ -30,10 +30,13 @@ class GroupResource(Resource):
         args = parser.parse_args()
         db_sess = db_session.create_session()
         group = db_sess.query(Groups).get(group_id)
-        group.name = args['group_name']
+        group.name = args['name']
         db_sess.commit()
+        group = db_sess.query(Groups).filter(Groups.name == args["name"]).first()
         db_sess.close()
-        return {"success": "OK"}
+        return jsonify(
+            {'group': group.to_dict(only=("id", "name"))}
+        )
 
     def delete(self, group_id):
         abort_id_group_not_found(group_id)
@@ -60,9 +63,12 @@ class GroupListResource(Resource):
         db_sess = db_session.create_session()
         args = parser.parse_args()
         group = Groups(
-            name=args['group_name']
+            name=args['name']
         )
         db_sess.add(group)
         db_sess.commit()
+        group = db_sess.query(Groups).filter(Groups.name == args["name"]).first()
         db_sess.close()
-        return {"success": "OK"}
+        return jsonify(
+            {'group': group.to_dict(only=("id", "name"))}
+        )

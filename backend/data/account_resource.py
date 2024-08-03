@@ -2,12 +2,36 @@ from . import db_session
 from flask_restful import abort, Resource, reqparse
 from .account import Account
 from flask import jsonify
+from threading import Thread
+from parsing.main_parse import main
+from .parse_result import ParseResult
+import time
 
 parser = reqparse.RequestParser()
 parser.add_argument("name")
 parser.add_argument("email")
 parser.add_argument("avatar_url")
 parser.add_argument("group_id")
+
+
+def parse_new_account(email):
+    result = main([email])
+    db_sess = db_session.create_session()
+    for el in result[email]:
+        account = db_sess.query(Account).filter(Account.email == email).first()
+        parse_result = ParseResult(
+            text=el["text"],
+            title=el["title"],
+            timestamp=int(el["timestamp"]),
+            last_parsing_time=time.time(),
+            account_email=email,
+            account_post_count=el["count"],
+            url=el["url"],
+            account_id=account.id
+        )
+        db_sess.add(parse_result)
+        db_sess.commit()
+    db_sess.close()
 
 
 def abort_id_account_not_found(account_id):
@@ -38,8 +62,11 @@ class AccountResource(Resource):
         account.group_id = args['group_id']
         account.avatar_url = args["avatar_url"]
         db_sess.commit()
+        account = db_sess.query(Account).get(account_id)
         db_sess.close()
-        return {"success": "OK"}
+        return jsonify(
+            {"account": account.to_dict(only=("id", "name", "email", "group_id", "avatar_url"))}
+        )
 
     def delete(self, account_id):
         abort_id_account_not_found(account_id)
@@ -72,5 +99,10 @@ class AccountListResource(Resource):
         )
         db_sess.add(account)
         db_sess.commit()
+        account = db_sess.query(Account).filter(Account.email == args["email"]).first()
         db_sess.close()
-        return {'success': "OK"}
+        parsing = Thread(target=parse_new_account, args=(args["email"],))
+        parsing.start()
+        return jsonify(
+            {"account": account.to_dict(only=("id", "name", "email", "group_id", "avatar_url"))}
+        )
