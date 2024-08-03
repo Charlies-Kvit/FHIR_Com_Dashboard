@@ -21,6 +21,16 @@ def ping():
     return {"answer": "pong!"}
 
 
+@app.errorhandler(404)
+def error_404(*_):
+    return {"ERROR": 404}, 404
+
+
+@app.errorhandler(500)
+def error_500(*_):
+    return {"ERROR": "500, please, give a feedback on this email: theivangao@gmail.com"}, 500
+
+
 db_session.global_init(DATABASE)
 api.add_resource(AccountResource, "/api/accounts/<int:account_id>")
 api.add_resource(AccountListResource, "/api/accounts")

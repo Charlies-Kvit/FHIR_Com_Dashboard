@@ -12,9 +12,9 @@ parser.add_argument("emails", action="append", required=True)
 
 def abort_id_account_not_found(account_id):
     db_sess = db_session.create_session()
-    group = db_sess.query(ParseResult).get(account_id)
+    account = db_sess.query(ParseResult).filter(ParseResult.account_id == account_id).first()
     db_sess.close()
-    if not group:
+    if not account:
         abort(404, message=f"Account {account_id} not found")
 
 
@@ -22,7 +22,7 @@ class ParseRequestResource(Resource):
     def get(self, account_id):
         abort_id_account_not_found(account_id)
         db_sess = db_session.create_session()
-        parse_results = db_sess.query(ParseResult).get(account_id).all()
+        parse_results = db_sess.query(ParseResult).filter(ParseResult.account_id == account_id).all()
         db_sess.close()
         return [parse_res.to_dict(only=("id", "title", "url", "account_post_count", "text", "account_id"))
                 for parse_res in parse_results]
