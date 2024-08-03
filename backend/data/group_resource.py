@@ -65,4 +65,6 @@ class GroupListResource(Resource):
         db_sess.add(group)
         db_sess.commit()
         db_sess.close()
-        return {"success": "OK"}
+        return jsonify(
+            {'group': group.to_dict(only=("id", "name"))}
+        )
