@@ -22,8 +22,8 @@ def ping():
 
 
 db_session.global_init(DATABASE)
-api.add_resource(AccountResource, "/api/accounts/<int:account_id>")
-api.add_resource(AccountListResource, "/api/accounts")
+# api.add_resource(AccountResource, "/api/accounts/<int:account_id>")
+# api.add_resource(AccountListResource, "/api/accounts")
 api.add_resource(AccountResource, "/api/users/<int:account_id>")
 api.add_resource(AccountListResource, "/api/users")
 api.add_resource(GroupResource, "/api/groups/<int:group_id>")
