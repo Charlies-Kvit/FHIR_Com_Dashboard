@@ -64,6 +64,7 @@ class GroupListResource(Resource):
         )
         db_sess.add(group)
         db_sess.commit()
+        group = db_sess.query(Groups).filter(Groups.name == args["group_name"]).first()
         db_sess.close()
         return jsonify(
             {'group': group.to_dict(only=("id", "name"))}
