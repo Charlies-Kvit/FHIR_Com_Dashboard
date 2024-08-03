@@ -10,21 +10,22 @@ parser = reqparse.RequestParser()
 parser.add_argument("emails", action="append", required=True)
 
 
-def abort_id_account_not_found(account_email):
+def abort_id_account_not_found(account_id):
     db_sess = db_session.create_session()
-    group = db_sess.query(ParseResult).filter(ParseResult.account_email == account_email).first()
+    group = db_sess.query(ParseResult).get(account_id)
     db_sess.close()
     if not group:
-        abort(404, message=f"Account {account_email} not found")
+        abort(404, message=f"Account {account_id} not found")
 
 
 class ParseRequestResource(Resource):
-    def get(self, account_email):
-        abort_id_account_not_found(account_email)
+    def get(self, account_id):
+        abort_id_account_not_found(account_id)
         db_sess = db_session.create_session()
-        parse_res = db_sess.query(ParseResult).filter(ParseResult.account_email == account_email).first()
+        parse_results = db_sess.query(ParseResult).get(account_id).all()
         db_sess.close()
-        return parse_res.to_dict(only=("id", "title", "url", "account_post_count", "text", "account_id"))
+        return [parse_res.to_dict(only=("id", "title", "url", "account_post_count", "text", "account_id"))
+                for parse_res in parse_results]
 
     def put(self, account_email):
         pass
@@ -39,12 +40,14 @@ class ParseRequestListResource(Resource):
         get_emails = []
         do_emails = []
         db_sess = db_session.create_session()
+        answer = []
         for email in emails:
             parse_res = db_sess.query(ParseResult).filter(ParseResult.account_email == email).first()
             if not parse_res:
                 get_emails.append(email)
                 continue
             do_emails.append(email)
+            answer.append(parse_res.account_id)
         result = main(get_emails)
         for email in get_emails:
             for el in result[email]:
@@ -61,5 +64,6 @@ class ParseRequestListResource(Resource):
                 )
                 db_sess.add(parse_result)
                 db_sess.commit()
-                db_sess.close()
-        return {"success": "OK"}
+                answer.append(account.id)
+        db_sess.close()
+        return {"accounts_ids": answer}

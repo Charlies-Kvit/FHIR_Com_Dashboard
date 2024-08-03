@@ -17,7 +17,7 @@ API_KEY_AI=adsdsafdsfads # API KEY from openai
 
 ## How to run frontend(vite server)
 
-1. Run back
+1. Run- back
 2. Check proxy ip address to match api address in `vite.config.js`
 3. Run `npm i; npm run dev -- --host`
 
@@ -29,7 +29,7 @@ API_KEY_AI=adsdsafdsfads # API KEY from openai
    Example response:
 ```json
 {
-    "user": {
+    "account": {
         "email":  "a@g.com",
         "group_id":  1,
         "id":  1,
@@ -42,7 +42,7 @@ API_KEY_AI=adsdsafdsfads # API KEY from openai
    Example response:
 ```json
 {
-    "users": [
+    "accounts": [
         {
             "email": "a@g.com",
             "group_id": 1,
@@ -90,9 +90,7 @@ Usage example:
 ```
 Access response:
 ```json
-{
-    "success": "OK"
-}
+
 ```
 #### DELETE:
 ```/api/accounts/<int:accounts_id>```  
@@ -190,11 +188,13 @@ So far so.
 Example response:
 ```json
 {
-    "success": "OK"
+    "accounts_ids": [
+        1, 2, 3, 4
+    ]
 }
 ```
 #### GET
-```/api/parsing/<str:email>``` - get data for drawing a diagram from email.  
+```/api/parsing/<int:account_id>``` - get data for drawing a diagram from email.  
 ```json
 {
     "sh@gefyra.de": [
