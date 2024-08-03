@@ -9,5 +9,5 @@ class Groups(SqlAlchemyBase, SerializerMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.CHAR)
-    users = orm.relationship("User", back_populates='group', cascade="all, delete-orphan")
+    users = orm.relationship("Account", back_populates='group', cascade="all, delete-orphan")
 

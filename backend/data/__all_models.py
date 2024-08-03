@@ -1,4 +1,4 @@
-from . import dashboard_resource
-from . import users
+from . import group_resource
+from . import account
 from . import parse_result
 from . import groups
