@@ -66,7 +66,7 @@ Usage example:
 ```json
     {
    "name": "Hor", 
-   "email": "Charlies_Hot@g.com", 
+   "email": "a@g.com", 
    "group_id": 1,
    "avatar_url": "url"
 }
@@ -74,7 +74,13 @@ Usage example:
 Access response:
 ```json
 {
-    "success": "OK"
+    "account": {
+        "email":  "a@g.com",
+        "group_id":  1,
+        "id":  1,
+        "name":  "Hor",
+        "avatar_url": "url"
+    }
 }
 ```
 #### POST:
@@ -90,7 +96,15 @@ Usage example:
 ```
 Access response:
 ```json
-
+{
+    "account": {
+        "email":  "Charlies_Hot@g.com",
+        "group_id": 1,
+        "id": 1,
+        "name":  "Popgdse",
+        "avatar_url": "url"
+    }
+}
 ```
 #### DELETE:
 ```/api/accounts/<int:accounts_id>```  
@@ -189,7 +203,7 @@ Example response:
 ```json
 {
     "accounts_ids": [
-        1, 2, 3, 4
+        1
     ]
 }
 ```

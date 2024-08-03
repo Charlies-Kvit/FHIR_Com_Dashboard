@@ -38,8 +38,11 @@ class AccountResource(Resource):
         account.group_id = args['group_id']
         account.avatar_url = args["avatar_url"]
         db_sess.commit()
+        account = db_sess.query(Account).get(account_id)
         db_sess.close()
-        return {"success": "OK"}
+        return jsonify(
+            {"account": account.to_dict(only=("id", "name", "email", "group_id", "avatar_url"))}
+        )
 
     def delete(self, account_id):
         abort_id_account_not_found(account_id)
@@ -72,5 +75,8 @@ class AccountListResource(Resource):
         )
         db_sess.add(account)
         db_sess.commit()
+        account = db_sess.query(Account).filter(Account.email == args["email"]).first()
         db_sess.close()
-        return {'success': "OK"}
+        return jsonify(
+            {"account": account.to_dict(only=("id", "name", "email", "group_id", "avatar_url"))}
+        )

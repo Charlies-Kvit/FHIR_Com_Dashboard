@@ -24,8 +24,8 @@ class ParseRequestResource(Resource):
         db_sess = db_session.create_session()
         parse_results = db_sess.query(ParseResult).filter(ParseResult.account_id == account_id).all()
         db_sess.close()
-        return [parse_res.to_dict(only=("id", "title", "url", "account_post_count", "text", "account_id"))
-                for parse_res in parse_results]
+        return {parse_results[0].account_email: [parse_res.to_dict(only=("id", "title", "url", "account_post_count", "text", "account_id"))
+                for parse_res in parse_results]}
 
     def put(self, account_email):
         pass
