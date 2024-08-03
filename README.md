@@ -136,13 +136,16 @@ Access response:
 Usage example:
 ```json
 {
-  "group_name": "Germany"
+  "name": "Germany"
 }
 ```
 Access response:
 ```json
 {
-    "success": "OK"
+    "group": {
+        "id": 1,
+        "name": "Germany"
+    }
 }
 ```
 #### POST:
@@ -150,14 +153,17 @@ Access response:
 Usage example:
 ```json
 {
-  "group_name": "Germany"
+  "name": "Germany"
 }
 
 ```
 Access response:
 ```json
 {
-    "success": "OK"
+    "group": {
+        "id": 1,
+        "name": "Germany"
+    }
 }
 ```
 #### DELETE:
