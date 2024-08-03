@@ -47,7 +47,8 @@ class ParseRequestListResource(Resource):
                 get_emails.append(email)
                 continue
             do_emails.append(email)
-            answer.append(parse_res.account_id)
+            if parse_res.account_id not in answer:
+                answer.append(parse_res.account_id)
         result = main(get_emails)
         for email in get_emails:
             for el in result[email]:
@@ -64,6 +65,7 @@ class ParseRequestListResource(Resource):
                 )
                 db_sess.add(parse_result)
                 db_sess.commit()
-                answer.append(account.id)
+                if account.id not in answer:
+                    answer.append(account.id)
         db_sess.close()
         return {"accounts_ids": answer}

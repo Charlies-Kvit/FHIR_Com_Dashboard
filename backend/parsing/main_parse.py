@@ -33,7 +33,7 @@ def parse(emails):
             stream_id_do.append(stream_id)
             data[stream_id] = count
         sorted_answer = sorted(data.items(), key=lambda item: item[1], reverse=True)
-        for el in sorted_answer[:6]:
+        for el in sorted_answer[:5]:
             stream_id = el[0]
             subject = ""
             display_recipient = ""
@@ -83,6 +83,8 @@ def parse(emails):
                 "url": url,
                 "title": subject
             })
+            if len(result[email]) == 5:
+                break
     return result
 
 
