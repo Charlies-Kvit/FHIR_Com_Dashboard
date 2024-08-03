@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { type Person, persons } from "$lib/store.svelte";
-  import Dashboard from "./Dashboard.svelte";
+  import { type Person, persons } from "$lib/store/person.store";
+  import { type Dashboard } from "$lib/store/dashboard.store";
   import EditForm from "$lib/components/EditForm.svelte";
 
   let { dashboard, onadd } = $props<{

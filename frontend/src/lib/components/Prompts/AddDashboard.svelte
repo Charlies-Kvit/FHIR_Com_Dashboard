@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { dashboards, type Dashboard } from "$lib/store.svelte";
+  import { dashboards, type Dashboard } from "$lib/store/dashboard.store";
   import EditForm from "$lib/components/EditForm.svelte";
 
   let { onadd } = $props<{ onadd: () => void }>();

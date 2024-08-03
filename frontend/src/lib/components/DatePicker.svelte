@@ -1,13 +1,13 @@
 <script lang="ts">
   import { DatePicker } from "@svelte-plugins/datepicker";
   import { format } from "date-fns";
-  import { theme } from "$lib/store.svelte";
+  import { theme } from "$lib/store/theme.store";
 
   let {
     startDate = $bindable(new Date()),
     dateFormat = "dd.MM.yy",
     isOpen = $bindable(false),
-  } = $props<{ startDate: Date; dateFormat: string; isOpen: boolean }>();
+  } = $props<{ startDate?: Date; dateFormat?: string; isOpen?: boolean }>();
 
   const toggleDatePicker = () => (isOpen = !isOpen);
 
@@ -23,7 +23,7 @@
 </script>
 
 <div>
-  <DatePicker bind:isOpen bind:startDate theme={theme.value}>
+  <DatePicker bind:isOpen bind:startDate theme={$theme}>
     <button
       class="dark:bg-[#3D3D3D] px-3 py-2 rounded-xl"
       onclick={toggleDatePicker}

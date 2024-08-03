@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { dashboards, persons, type Person } from "$lib/store.svelte";
   import EditForm from "$lib/components/EditForm.svelte";
+  import { dashboards } from "$lib/store/dashboard.store";
+  import { type Person, persons } from "$lib/store/person.store";
 
   let { person } = $props<{ person: Person }>();
   let { group_id, avatar_url, name, email } = person;
@@ -9,7 +10,7 @@
     persons.update(person, { group_id, avatar_url, name, email });
   };
   const delete_person = () => {
-    persons.delete(person);
+    persons.remove(person);
   };
 </script>
 
@@ -19,7 +20,7 @@
   ondelete={delete_person}
 >
   <select class="select" name="dashboard" bind:value={group_id}>
-    {#each dashboards.value as dashboard, i}
+    {#each $dashboards as dashboard}
       <option value={dashboard.id}>{dashboard.name}</option>
     {/each}
   </select>

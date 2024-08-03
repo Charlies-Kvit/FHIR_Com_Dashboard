@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as d3 from "d3";
   import BarItem from "./BarItem.svelte";
-  import type {Summary} from "$lib/types"
+  import type { Summary } from "$lib/store/person.store";
 
   let { data, selected = $bindable(undefined) }  = $props<{ data:Summary[], selected: undefined|number }>()
 
@@ -12,7 +12,7 @@
   const xScale = d3
     .scaleLinear()
     .range([margin, width-margin-50])
-    .domain([0, Math.max(...data.map((v: Summary)=>v.user_post_count))]);
+    .domain([0, Math.max(...data.map((v: Summary)=>v.account_post_count))]);
 
   const yScale = d3
     .scaleBand()
@@ -23,7 +23,7 @@
   const color = d3.scaleOrdinal().range(["#5388D8", "#F4BE37", "#FF9F40", "#543EDC", "#FF4B40"]);
   const bar_item_size = 20;
   let sum_count_posts = data
-  .map((v:Summary)=>v.user_post_count)
+  .map((v:Summary)=>v.account_post_count)
   .reduce((previous:number, current:number) => previous + current,0)
 </script>
 
@@ -32,7 +32,7 @@
   <g>
     {#each data as d, i}
       {@const y = yScale(d.id) as number + (yScale.bandwidth() - bar_item_size)/2 }
-      {@const width = xScale(d.user_post_count)- margin }
+      {@const width = xScale(d.account_post_count)- margin }
       <BarItem
         x={margin}
         {y}
@@ -40,7 +40,7 @@
         height={bar_item_size}
         r={bar_item_size/2}
         color={color(String(i)) as string}
-        percent={(d.user_post_count / sum_count_posts) * 100}
+        percent={(d.account_post_count / sum_count_posts) * 100}
         title={d.title}
         is_active={i == selected}
         onclick={()=>selected=i}

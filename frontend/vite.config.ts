@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // on vm, set to ip adress of vm
+        target: 'https://49.13.48.163/', // on vm, set to ip adress of vm
         changeOrigin: true,
         secure: false,
         configure: (proxy, _options) => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Dashboard from "./Dashboard.svelte";
+  import Dashboard from "$lib/components/Dashboard/Dashboard.svelte";
   import DatePicker from "$lib/components/DatePicker.svelte";
 </script>
 

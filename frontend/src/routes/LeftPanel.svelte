@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { dashboards, selected_dashboard } from "$lib/store.svelte";
-  import Modal from "./Modal.svelte";
-  import AddDashboard from "./AddDashboard.svelte";
-  import AddPerson from "./AddPerson.svelte";
-  import EditDashboard from "./EditDashboard.svelte";
+  import { dashboards, selected_dashboard, type Dashboard } from "$lib/store/dashboard.store";
+  import Modal from "$lib/components/Modal.svelte";
+  import AddDashboard from "$lib/components/Prompts/AddDashboard.svelte";
+  import AddPerson from "$lib/components/Prompts/AddPerson.svelte";
+  import EditDashboard from "$lib/components/Prompts/EditDashboard.svelte";
 
   let show_add = $state(false);
   let show_edit_dashboard = $state(false);
-  let dashboard_to_edit = null;
+  let dashboard_to_edit: Dashboard | null = $state(null);
   let show_add_person = $state(false);
   let innerWidth = $state(0)
-  let is_open = $state(undefined)
+  let is_open: undefined | boolean = $state(undefined)
   let classs = $derived.by(()=>{
     if(is_open === undefined) return ''
     else return "fixed inset-0 z-50 " + (is_open ? 'animate__slideInLeft' : 'animate__slideOutLeft')
@@ -23,13 +23,13 @@
 <section class="row-span-15 col-span-1 box-content overflow-hidden ">
   <nav class="bg-base-300 flex flex-col h-full px-6 py-9 transition-all animate__animated {classs} lg:static lg:!animate-none">
     <ul class="list-none flex flex-col gap-6">
-      {#each dashboards.value as dashboard, i (dashboard.id)}
+      {#each $dashboards as dashboard (dashboard.id)}
         <li class="flex items-center gap-2 border-b pb-6 border-[#313131]">
           <button
-            class={dashboard == selected_dashboard.value
+            class={dashboard == $selected_dashboard
               ? "font-bold dark:font-normal dark:text-white"
               : ""}
-            onclick={() => selected_dashboard.select(dashboard)}
+            onclick={() => selected_dashboard.set(dashboard)}
             >{dashboard.name}</button
           >
         <div class="grow"></div>
@@ -52,7 +52,7 @@
     <div class="grow"></div>
     <div>
       <button class="rounded-full bg-[#5D5D5D]" onclick={() => (show_add = true)}
-        ><span class="block i-material-symbols-add text-[32px]"></span></button
+        ><span class="block i-material-symbols-add text-[32px] text-base-200 dark:text-base-content"></span></button
       >
     </div>
   </nav>

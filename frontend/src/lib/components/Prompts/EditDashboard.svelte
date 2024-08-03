@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { dashboards, type Dashboard } from "$lib/store.svelte";
+  import { dashboards, type Dashboard } from "$lib/store/dashboard.store";
   import EditForm from "$lib/components/EditForm.svelte";
 
   let { dashboard, onremove } = $props<{
@@ -10,7 +10,7 @@
     dashboards.update(dashboard, new_dashboard);
   };
   const delete_dashboard = () => {
-    dashboards.delete(dashboard);
+    dashboards.remove(dashboard);
     onremove();
   };
   let new_dashboard: Dashboard = { ...dashboard };

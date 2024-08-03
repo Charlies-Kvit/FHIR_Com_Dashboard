@@ -3,12 +3,6 @@
   import "animate.css";
   import Header from "./Header.svelte";
   import LeftPanel from "./LeftPanel.svelte";
-  import { init_theme, initialize_store } from "$lib/store.svelte";
-  import { onMount } from "svelte";
-  onMount(() => {
-    init_theme();
-    initialize_store();
-  });
 </script>
 
 <Header></Header>
