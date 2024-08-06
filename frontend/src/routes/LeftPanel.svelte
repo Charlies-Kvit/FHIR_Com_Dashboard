@@ -4,6 +4,7 @@
   import AddDashboard from "$lib/components/Prompts/AddDashboard.svelte";
   import AddPerson from "$lib/components/Prompts/AddPerson.svelte";
   import EditDashboard from "$lib/components/Prompts/EditDashboard.svelte";
+    import LeftPanelEntry from "./LeftPanelEntry.svelte";
 
   let show_add = $state(false);
   let show_edit_dashboard = $state(false);
@@ -22,33 +23,26 @@
 <svelte:window bind:innerWidth></svelte:window>
 <section class="row-span-15 col-span-1 box-content overflow-hidden ">
   <nav class="bg-base-300 flex flex-col h-full px-6 py-9 transition-all animate__animated {classs} lg:static lg:!animate-none">
+    {#key $selected_dashboard}
     <ul class="list-none flex flex-col gap-6">
       {#each $dashboards as dashboard (dashboard.id)}
         <li class="flex items-center gap-2 border-b pb-6 border-[#313131]">
-          <button
-            class={dashboard == $selected_dashboard
-              ? "font-bold dark:font-normal dark:text-white"
-              : ""}
-            onclick={() => selected_dashboard.set(dashboard)}
-            >{dashboard.name}</button
-          >
-        <div class="grow"></div>
-          <button
-            class="h-min"
-            onclick={() => {
-              dashboard_to_edit = dashboard;
-              show_edit_dashboard = true;
-            }}><span class="block i-material-symbols-settings text-xl text-[#5D5D5D]"></span></button
-          >
-          <button class="h-min rounded-full bg-[#5D5D5D]" onclick={()=>{
-              dashboard_to_edit = dashboard;
-              show_add_person = true;
-          }}
-            ><span class="block i-material-symbols-add text-xl text-[#D9D9D9] "></span></button
-          >
+            <LeftPanelEntry {dashboard} 
+              onedit={ () => {
+                  dashboard_to_edit = dashboard;
+                  show_edit_dashboard = true;
+                }
+              }
+              onaddperson={() => {
+                    dashboard_to_edit = dashboard;
+                    show_add_person = true;
+                  }
+              }
+              ></LeftPanelEntry>
         </li>
       {/each}
     </ul>
+    {/key}
     <div class="grow"></div>
     <div>
       <button class="rounded-full bg-[#5D5D5D]" onclick={() => (show_add = true)}

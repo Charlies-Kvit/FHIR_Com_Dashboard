@@ -27,7 +27,7 @@
   .reduce((previous:number, current:number) => previous + current,0)
 </script>
 
-<svg viewBox="0 0 {width} {height}" class="h-full max-h-[25vh] overflow-hidden">
+<svg viewBox="0 0 {width} {height}" class="overflow-hidden">
   <line x1="0" y1="5" x2="0" y2="{height-5}" stroke-width="10" class="stroke-gray-300 dark:stroke-neutral" stroke-linecap="round"></line>
   <g>
     {#each data as d, i}

@@ -2,39 +2,54 @@ import { browser } from "$app/environment"
 import type { Dashboard } from "$lib/store/dashboard.store.ts"
 import { writable, get } from "svelte/store"
 
-export type Person = { avatar_url: string, name: string, email: string, group_id: number, summary?: Summary[], id?: number }
-
-const createPersonsStore = () => {
-  const { subscribe, set } = writable<Person[]>([])
-
-  const parse_summary = (person: Person) => {
-    fetch("/api/parsing", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ emails: [person.email] })
-    }).then(res => {
-      console.log("Request complete! response:", res);
-      if (res.ok)
-        fetch("/api/parsing/" + person.id).then((v) => {
-          if (v.ok)
-            v.json().then((v) => {
-              person.summary = v[person.email].slice(1, 6);
-            });
-          else console.log(v);
-        });
-    });
-
+export class Person {
+  constructor(
+    public avatar_url: string,
+    public name: string,
+    public email: string,
+    public group_id: number,
+    public id: number,
+  ) { }
+  static from_object(
+    obj: {
+      avatar_url: string,
+      name: string,
+      email: string,
+      group_id: number,
+      id: number,
+    }
+  ) {
+    return new Person(obj.avatar_url, obj.name, obj.email, obj.group_id, obj.id)
   }
-  const for_dashboard =
-    (dashboard: Dashboard):
-      Person[] => { return get({ subscribe }).filter(p => p.group_id == dashboard.id) }
 
+  #summary: Summary[] = []
+  public get summary(): Promise<Summary[]> | Summary[] | undefined {
+    console.log("Get summary")
+    if (this.#summary.length != 0) return this.#summary
+    else return fetch("/api/parsing/" + this.id).then((v) => {
+      if (v.ok)
+        return v.json().then((v) => {
+          this.#summary = v[this.email].slice(1, 6)
+          return this.#summary
+        });
+      this.#summary = []
+      throw new Error()
+    });
+  }
+
+}
+const createPersonsStore = () => {
+  const store = writable<Person[]>([])
+  const { subscribe, set } = store
+
+  subscribe(v => {
+    v.forEach(v => v.summary)
+  })
   const load = async () => {
     fetch('/api/accounts')
       .then(
         response => response.json()
-          .then(result => set(result.accounts))
-          .then(() => get({ subscribe }).forEach((p: Person) => parse_summary(p)))
+          .then(result => set(result.accounts.map((v: Person) => Person.from_object(v))))
       )
   }
   if (browser) load()
@@ -49,7 +64,7 @@ const createPersonsStore = () => {
       load()
     });
   }
-  const update = (person_old: Person, person_new: Person) => {
+  const update = (person_old: Person, person_new: Partial<Person>) => {
     fetch("/api/accounts/" + person_old.id, {
       method: "PUT",
       headers: { 'Content-Type': 'application/json' },
@@ -67,7 +82,7 @@ const createPersonsStore = () => {
       load()
     });
   }
-  return { subscribe, add, update, for_dashboard, remove }
+  return { subscribe, add, update, remove }
 }
 
 export const persons = createPersonsStore()
