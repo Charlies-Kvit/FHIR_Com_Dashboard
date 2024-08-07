@@ -23,9 +23,8 @@ export class Person {
   }
 
   #summary: Summary[] = []
-  public get summary(): Promise<Summary[]> | Summary[] | undefined {
-    console.log("Get summary")
-    if (this.#summary.length != 0) return this.#summary
+  public get summary(): Promise<Summary[] | undefined> {
+    if (this.#summary.length != 0) return new Promise((resolve, _) => resolve(this.#summary))
     else return fetch("/api/parsing/" + this.id).then((v) => {
       if (v.ok)
         return v.json().then((v) => {
@@ -34,6 +33,9 @@ export class Person {
         });
       this.#summary = []
       throw new Error()
+    }).catch((m) => {
+      console.log("Can't get parsing of account " + this.id)
+      return undefined
     });
   }
 

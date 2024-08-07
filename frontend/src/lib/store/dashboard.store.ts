@@ -16,8 +16,6 @@ const createDashboardStore = () => {
   if (browser) load()
   subscribe((v) => {
     if (v.length != 0 && get(selected_dashboard) == null) {
-
-      console.log(v.length, get(selected_dashboard))
       selected_dashboard.select(v[0])
     }
   })

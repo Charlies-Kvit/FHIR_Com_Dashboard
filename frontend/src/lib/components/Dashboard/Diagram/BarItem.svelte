@@ -52,7 +52,6 @@
   y={y - offset / 2}
   width={300 - x}
   height={height + offset * 1.5}
-  class="fill-transparent opacity-5 hover:fill-accent hover:opacity-25 transition-all {is_active
-    ? 'fill-accent opacity-15'
-    : ''}"
+  class="opacity-5 hover:fill-accent hover:opacity-30 transition-all
+  {is_active ? 'fill-accent opacity-20' : 'fill-transparent'}"
 ></rect>
