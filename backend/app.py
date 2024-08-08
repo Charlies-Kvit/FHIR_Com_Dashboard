@@ -2,6 +2,7 @@
 from data import db_session
 from flask_restful import Api
 from flask import Flask, redirect
+from data.auto_update_parse import update
 from data.account_resource import AccountResource, AccountListResource
 from data.group_resource import GroupResource, GroupListResource
 from data.parse_resource import ParseRequestResource, ParseRequestListResource
@@ -32,6 +33,7 @@ def error_500(*_):
 
 
 db_session.global_init(DATABASE)
+app.add_url_rule("/update_parsing", "update", update)
 api.add_resource(AccountResource, "/api/accounts/<int:account_id>")
 api.add_resource(AccountListResource, "/api/accounts")
 api.add_resource(GroupResource, "/api/groups/<int:group_id>")
