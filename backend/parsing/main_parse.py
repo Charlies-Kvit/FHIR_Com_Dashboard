@@ -23,6 +23,8 @@ def parse(emails):
             ],
         }
         answer = client.get_messages(request)
+        if "messages" not in answer:
+            continue
         stream_id_do = []
         data = {}
         for message in answer["messages"]:

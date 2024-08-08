@@ -11,6 +11,8 @@ def update():
     emails = [account.email for account in accounts]
     result = main(emails)
     for email in emails:
+        if email not in result:
+            continue
         parse_results = db_sess.query(ParseResult).filter(ParseResult.account_email == email).all()
         for parse_result in parse_results:
             db_sess.delete(parse_result)
