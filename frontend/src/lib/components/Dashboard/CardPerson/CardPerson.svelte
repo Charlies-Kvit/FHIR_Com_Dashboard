@@ -30,13 +30,11 @@
 <div
   class="card bg-base-100 card-bordered border-base-300 flex flex-row p-6 h-[390px]"
 >
-  <div
-    class="flex grow-[1.2] basis-0 items-center justify-center overflow-x-hidden"
-  >
+  <div class="flex w-[min(290px,35vw)] shrink-0 items-center justify-center">
     <Chart {summaries} bind:active_summary_index></Chart>
   </div>
   <div class="divider mx-6 divider-horizontal"></div>
-  <div class="basis-0 grow-[1] h-full">
+  <div class="">
     <Preview
       {...person}
       summary={active_summary}

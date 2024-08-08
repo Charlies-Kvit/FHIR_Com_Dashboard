@@ -25,15 +25,14 @@ export class Person {
   #summary: Summary[] = []
   public get summary(): Promise<Summary[] | undefined> {
     if (this.#summary.length != 0) return new Promise((resolve, _) => resolve(this.#summary))
-    else return fetch("/api/parsing/" + this.id).then((v) => {
-      if (v.ok)
-        return v.json().then((v) => {
-          this.#summary = v[this.email].slice(1, 6)
-          return this.#summary
-        });
+    else return fetch("/api/parsing/" + this.id).then(async (v) => {
+      if (v.ok) {
+        this.#summary = (await v.json())[this.email].slice(1, 6)
+        return this.#summary
+      }
       this.#summary = []
       throw new Error()
-    }).catch((m) => {
+    }).catch(_ => {
       console.log("Can't get parsing of account " + this.id)
       return undefined
     });

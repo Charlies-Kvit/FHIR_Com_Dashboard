@@ -26,10 +26,8 @@
     <h1 class="font-bold mb-2">{name}</h1>
     {#if summary}
       <div transition:fade class="flex flex-col grow">
-        <div
-          class="text-wrap break-all truncate prose basis-0 grow-[1] min-h-4 overflow-hidden"
-        >
-          {@html marked.parse(summary.text.slice(0, 250))}
+        <div class="text-wrap break-all truncate prose line-clamp-6 h-[12rem]">
+          {@html marked.parse(summary.text)}
         </div>
         <div class="flex justify-between mt-3">
           <a href={summary.url} class="link">Link</a>
