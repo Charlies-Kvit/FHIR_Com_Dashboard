@@ -15,7 +15,11 @@
     <article class="flex flex-col justify-center items-center gap-6 pb-6">
       {#if $selected_dashboard}
         {#each dashboard_persons as person (person.id)}
-          <div animate:flip={{ duration: 1000 }} transition:slide>
+          <div
+            animate:flip={{ duration: 1000 }}
+            transition:slide
+            class="w-full flex justify-center"
+          >
             <CardPerson {person}></CardPerson>
           </div>
         {/each}

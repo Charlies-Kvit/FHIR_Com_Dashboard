@@ -27,20 +27,16 @@
 <Modal bind:open={show_more}>
   <ShowMore {...person} summary={active_summary}></ShowMore>
 </Modal>
-<div
-  class="card bg-base-100 card-bordered border-base-300 flex flex-row p-6 h-[390px]"
+<article
+  class="card bg-base-100 card-bordered border-base-300 flex flex-row p-6 h-[390px] w-full max-w-[1060px]"
 >
-  <div class="flex w-[min(290px,35vw)] shrink-0 items-center justify-center">
-    <Chart {summaries} bind:active_summary_index></Chart>
-  </div>
+  <Chart {summaries} bind:active_summary_index></Chart>
   <div class="divider mx-6 divider-horizontal"></div>
-  <div class="">
-    <Preview
-      {...person}
-      summary={active_summary}
-      onmore={() => (show_more = true)}
-      onsettings={() => (show_settings = true)}
-      summary_index={active_summary_index}
-    ></Preview>
-  </div>
-</div>
+  <Preview
+    {...person}
+    summary={active_summary}
+    onmore={() => (show_more = true)}
+    onsettings={() => (show_settings = true)}
+    summary_index={active_summary_index}
+  ></Preview>
+</article>
