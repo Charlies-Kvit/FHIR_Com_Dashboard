@@ -36,14 +36,15 @@ def error_500(*_):
 
 
 def time_checker():
-    delta = datetime.timedelta(hours=3, minutes=0)
-    date = (datetime.datetime.now(datetime.timezone.utc) + delta).strftime('%H:%M')
-    hours = int(date[:date.find(":")])
-    minutes = int(date[date.find(":") + 1:])
-    if hours == 23 and 55 <= minutes <= 56:
-        logger.info("Началось автообновление бд")
-        update()
-    time.sleep(60)
+    while True:
+        delta = datetime.timedelta(hours=3, minutes=0)
+        date = (datetime.datetime.now(datetime.timezone.utc) + delta).strftime('%H:%M')
+        hours = int(date[:date.find(":")])
+        minutes = int(date[date.find(":") + 1:])
+        if hours == 23 and 55 <= minutes <= 56:
+            logger.info("Началось автообновление бд")
+            update()
+        time.sleep(60)
 
 
 
