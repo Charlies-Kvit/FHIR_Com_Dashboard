@@ -12,12 +12,14 @@
 
 {#key $selected_dashboard}
   <div class="overflow-y-scroll col-span-full" out:slide in:fade>
-    <article
-      class="grid justify-center items-center grid-cols-1 xl:grid-cols-2 gap-6"
-    >
+    <article class="flex flex-col justify-center items-center gap-6 pb-6">
       {#if $selected_dashboard}
         {#each dashboard_persons as person (person.id)}
-          <div animate:flip={{ duration: 1000 }} transition:slide>
+          <div
+            animate:flip={{ duration: 1000 }}
+            transition:slide
+            class="w-full flex justify-center"
+          >
             <CardPerson {person}></CardPerson>
           </div>
         {/each}
