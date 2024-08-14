@@ -7,6 +7,9 @@ from data.account_resource import AccountResource, AccountListResource
 from data.group_resource import GroupResource, GroupListResource
 from data.parse_resource import ParseRequestResource, ParseRequestListResource
 from config.config import HOST, PORT, DEBUG, DATABASE
+import datetime
+import time
+import threading
 import logging
 
 app = Flask(__name__)
@@ -32,6 +35,19 @@ def error_500(*_):
     return {"ERROR": "500, please, give a feedback on this email: theivangao@gmail.com"}, 500
 
 
+def time_checker():
+    delta = datetime.timedelta(hours=3, minutes=0)
+    date = (datetime.datetime.now(datetime.timezone.utc) + delta).strftime('%H:%M')
+    hours = int(date[:date.find(":")])
+    minutes = int(date[date.find(":") + 1:])
+    if hours == 23 and 55 <= minutes <= 56:
+        update()
+    time.sleep(60)
+
+
+
+
+
 db_session.global_init(DATABASE)
 app.add_url_rule("/update_parsing", "update", update)
 api.add_resource(AccountResource, "/api/accounts/<int:account_id>")
@@ -41,7 +57,19 @@ api.add_resource(GroupListResource, "/api/groups")
 api.add_resource(ParseRequestResource, "/api/parsing/<int:account_id>")
 api.add_resource(ParseRequestListResource, "/api/parsing")
 api.init_app(app)
+x = threading.Thread(target=time_checker)
 
+"""def checker_thread():
+    while True:
+        print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
+        time.sleep(5)
+
+if __name__ == '__main__':
+    x = threading.Thread(target=checker_thread)
+    x.start()
+
+    app.run(debug=True)
+"""
 if __name__ == '__main__':
     if DEBUG:
         app.run(host=HOST, port=PORT, debug=DEBUG)
