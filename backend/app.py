@@ -41,9 +41,10 @@ def time_checker():
         date = (datetime.datetime.now(datetime.timezone.utc) + delta).strftime('%H:%M')
         hours = int(date[:date.find(":")])
         minutes = int(date[date.find(":") + 1:])
-        if hours == 23 and 55 <= minutes <= 56:
+        if hours == 23 and 58 <= minutes <= 59:
             logger.info("Началось автообновление бд")
             update()
+            time.sleep(72000)
         time.sleep(60)
 
 
@@ -60,6 +61,7 @@ api.add_resource(ParseRequestResource, "/api/parsing/<int:account_id>")
 api.add_resource(ParseRequestListResource, "/api/parsing")
 api.init_app(app)
 x = threading.Thread(target=time_checker)
+x.run()
 
 """def checker_thread():
     while True:
