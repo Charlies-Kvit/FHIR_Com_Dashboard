@@ -34,8 +34,7 @@
 {/if}
 <style lang="scss">
 :global(.edit-form) {
-  .input,
-  .select {
+  :global(.input), :global(.select) {
     @apply dark:bg-[#3D3D3D] p-3;
   }
 

@@ -24,9 +24,12 @@
   </div>
   <div class="flex flex-col grow">
     <h1 class="font-bold mb-2">{name}</h1>
-    <div class="text-wrap break-words truncate prose line-clamp-6 h-[12rem]">
+    <div class=" prose">
       {#if summary}
-        <div transition:fade class="flex flex-col grow">
+        <div
+          transition:fade
+          class="truncate text-wrap break-words line-clamp-6 h-[12rem]"
+        >
           {@html marked.parse(summary.text)}
         </div>
         <div class="flex justify-between mt-3">
