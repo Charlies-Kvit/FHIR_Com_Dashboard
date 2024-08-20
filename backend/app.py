@@ -12,7 +12,7 @@ import logging
 app = Flask(__name__)
 # swagger = Swagger(app)
 api = Api(app)
-logging.basicConfig(filename='logs/logs.log', filemode='w')
+logging.basicConfig(filename='logs/logs.log', filemode='a')
 logger = logging.getLogger('flask')
 logger.setLevel(logging.DEBUG)
 

@@ -1,9 +1,9 @@
 import datetime
 import time
-import requests
 import logging
+from data.auto_update_parse import update
 
-logging.basicConfig(filename="logs/update_parse.log", filemode="w", level=logging.INFO,
+logging.basicConfig(filename="logs/update_parse.log", filemode="a", level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(message)s")
 while True:
     delta = datetime.timedelta(hours=3, minutes=0)
@@ -14,7 +14,7 @@ while True:
     if hours == 23 and 58 <= minutes <= 59:
         logging.info("Начало обновления")
         try:
-           requests.get("http://49.13.48.163/update_parsing")
+           update()
            logging.info("Успешно!")
         except Exception as error:
             logging.error(f"Ошибка! {error}")
