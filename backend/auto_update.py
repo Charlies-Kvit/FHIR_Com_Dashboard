@@ -14,8 +14,11 @@ while True:
     if hours == 23 and 58 <= minutes <= 59:
         logging.info("Начало обновления")
         try:
-           update()
-           logging.info("Успешно!")
+           result = update()
+           if result["success"] == "OK":
+               logging.info("Успешно!")
+           else:
+               logging.error(f"Неверное возвращенное значение! {result}")
         except Exception as error:
             logging.error(f"Ошибка! {error}")
         time.sleep(72000)

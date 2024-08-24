@@ -16,6 +16,7 @@ def update():
         parse_results = db_sess.query(ParseResult).filter(ParseResult.account_email == email).all()
         for parse_result in parse_results:
             db_sess.delete(parse_result)
+        db_sess.commit()
         for el in result[email]:
             account = db_sess.query(Account).filter(Account.email == email).first()
             parse_result = ParseResult(
