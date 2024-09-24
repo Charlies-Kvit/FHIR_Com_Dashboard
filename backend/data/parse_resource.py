@@ -7,6 +7,7 @@ from parsing.main_parse import main
 
 parser = reqparse.RequestParser()
 parser.add_argument("emails", action="append", required=True)
+parser.add_argument("zulip_ids", action="append", required=True)
 
 
 def abort_id_account_not_found(account_id):
@@ -34,6 +35,10 @@ class ParseRequestListResource(Resource):
     def post(self):
         args = parser.parse_args()
         emails = args["emails"]
+        zulip_ids = args["zulip_ids"]
+        data = {}
+        for index, email in enumerate(emails):
+            data[email] = zulip_ids[index]
         """start_time = args["start_time"]
         end_time = args["end_time"]"""
         get_emails = []
@@ -48,7 +53,7 @@ class ParseRequestListResource(Resource):
             do_emails.append(email)
             if parse_res.account_id not in answer:
                 answer.append(parse_res.account_id)
-        result = main(get_emails)
+        result = main(get_emails, data)
         for email in get_emails:
             for el in result[email]:
                 account = db_sess.query(Account).filter(Account.email == email).first()

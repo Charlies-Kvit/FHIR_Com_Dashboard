@@ -8,6 +8,7 @@ class Account(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'accounts'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    zulip_id = sqlalchemy.Column(sqlalchemy.Integer)
     name = sqlalchemy.Column(sqlalchemy.CHAR)
     email = sqlalchemy.Column(sqlalchemy.CHAR)
     avatar_url = sqlalchemy.Column(sqlalchemy.CHAR)

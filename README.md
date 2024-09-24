@@ -34,7 +34,8 @@ API_KEY_AI=adsdsafdsfads # API KEY from openai
         "group_id":  1,
         "id":  1,
         "name":  "Charlies",
-        "avatar_url": "url"
+        "avatar_url": "url",
+        "zulip_id": 1294124
     }
 }
 ```
@@ -48,14 +49,16 @@ API_KEY_AI=adsdsafdsfads # API KEY from openai
             "group_id": 1,
             "id": 1,
             "name": "Charlies",
-            "avatar_url": "url"
+            "avatar_url": "url",
+            "zulip_id": 129414
         },
         {
             "email": "Charlies_Hot@g.com",
             "group_id": 2,
             "id": 2,
             "name": "Popgdse",
-            "avatar_url": "url"
+            "avatar_url": "url",
+            "zulip_id": 12941242123
         }
     ]
 }
@@ -68,7 +71,8 @@ Usage example:
    "name": "Hor", 
    "email": "a@g.com", 
    "group_id": 1,
-   "avatar_url": "url"
+   "avatar_url": "url",
+   "zulip_id": 1294124
 }
 ```
 Access response:
@@ -91,7 +95,8 @@ Usage example:
    "name": "Popgdse", 
    "email": "Charlies_Hot@g.com", 
    "group_id": 1,
-   "avatar_url": "url"
+   "avatar_url": "url",
+   "zulip_id": 1294124
 }
 ```
 Access response:
@@ -102,7 +107,8 @@ Access response:
         "group_id": 1,
         "id": 1,
         "name":  "Popgdse",
-        "avatar_url": "url"
+        "avatar_url": "url",
+        "zulip_id": 1294124
     }
 }
 ```
@@ -117,6 +123,7 @@ Access response:
 <hr>
 
 ### Groups
+#### GET
 1. ```/api/groups/<int:group_id>``` - get the data of a single group.<br>
    Example response:
 ```json
@@ -188,14 +195,15 @@ Access response:
 ```
 <hr>
 
-### Group
+### Parsing
 
 #### POST:
 ```/api/parsing``` - to parse posts by mail.
 Usage example:
 ```json
 {
-   "emails": ["sh@gefyra.de"]
+   "emails": ["sh@gefyra.de"],
+   "zulip_ids": [1294124]
 }
 ```
 So far so.  

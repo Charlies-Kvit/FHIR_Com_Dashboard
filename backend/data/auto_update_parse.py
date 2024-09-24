@@ -9,7 +9,11 @@ def update():
     db_sess = db_session.create_session()
     accounts = db_sess.query(Account).all()
     emails = [account.email for account in accounts]
-    result = main(emails)
+    zulip_ids = [account.zulip_id for account in accounts]
+    data = {}
+    for index, email in enumerate(emails):
+        data[email] = zulip_ids[index]
+    result = main(emails, data)
     for email in emails:
         if email not in result:
             continue

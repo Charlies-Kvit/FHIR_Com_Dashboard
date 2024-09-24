@@ -3,7 +3,7 @@ from openai import OpenAI
 from config.config import API_KEY_AI
 
 
-def parse(emails):
+def parse(emails, data):
     if len(emails) == 1:
         core = True
     else:
@@ -24,7 +24,19 @@ def parse(emails):
         }
         answer = client.get_messages(request)
         if "messages" not in answer:
-            continue
+            answer = client.get_user_by_id(data[email])
+            request = {
+                "anchor": "newest",
+                "num_before": 100,
+                "num_after": 0,
+                "narrow": [
+                    {"operator": "sender", "operand": answer['user']['email']},
+                    {"operator": "channels", "operand": "public"}
+                ],
+            }
+            answer = client.get_messages(request)
+            if "messages" not in answer:
+                continue
         stream_id_do = []
         data = {}
         for message in answer["messages"]:
@@ -77,7 +89,7 @@ def parse(emails):
                     "content": text,
                 },
             ]
-            response = AI.chat.completions.create(model="llama-3-sonar-small-32k-online", messages=messages)
+            response = AI.chat.completions.create(model="llama-3.1-sonar-small-128k-online", messages=messages)
             result[email].append({
                 "text": response.choices[0].message.content,
                 "timestamp": timestamp,
@@ -111,7 +123,7 @@ def get_url(display_recipient, title, stream_id):
     return url
 
 
-def main(emails):
-    result = parse(emails)
+def main(emails, data):
+    result = parse(emails, data)
     return result
     # "sh@gefyra.de"
