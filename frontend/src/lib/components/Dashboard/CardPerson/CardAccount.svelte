@@ -1,12 +1,12 @@
 <script lang="ts">
   import Modal from "$lib/components/Modal.svelte";
-  import PersonSettings from "$lib/components/Prompts/PersonSettings.svelte";
-  import type { Person, Summary } from "$lib/store/person.store";
+  import type { Account, Summary } from "$lib/store/account.store";
   import Preview from "./Preview.svelte";
   import ShowMore from "./ShowMore.svelte";
   import Chart from "./Chart.svelte";
+  import EditAccount from "$lib/components/Prompts/EditAccount.svelte";
 
-  let { person } = $props<{ person: Person }>();
+  let { account } = $props<{ account: Account }>();
 
   let active_summary_index = $state(0);
   let summaries: undefined | Summary[] = $state(undefined);
@@ -14,7 +14,7 @@
     if (summaries == undefined) return undefined;
     return summaries[active_summary_index];
   });
-  person.summary.then((v: Summary[] | undefined) => {
+  account.summary.then((v: Summary[] | undefined) => {
     summaries = v;
   });
   let show_more = $state(false);
@@ -22,10 +22,10 @@
 </script>
 
 <Modal bind:open={show_settings}>
-  <PersonSettings {person}></PersonSettings>
+  <EditAccount {account}></EditAccount>
 </Modal>
 <Modal bind:open={show_more}>
-  <ShowMore {...person} summary={active_summary}></ShowMore>
+  <ShowMore {...account} summary={active_summary}></ShowMore>
 </Modal>
 <article
   class="card bg-base-100 card-bordered border-base-300 flex flex-row p-6 h-[390px] w-full max-w-[1060px]"
@@ -33,7 +33,7 @@
   <Chart {summaries} bind:active_summary_index></Chart>
   <div class="divider mx-6 divider-horizontal"></div>
   <Preview
-    {...person}
+    {...account}
     summary={active_summary}
     onmore={() => (show_more = true)}
     onsettings={() => (show_settings = true)}

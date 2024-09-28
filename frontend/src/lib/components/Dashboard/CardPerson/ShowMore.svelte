@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Summary } from "$lib/store/person.store";
+  import type { Summary } from "$lib/store/account.store";
   import { marked } from "marked";
 
   let { avatar_url, name, summary } = $props<{

@@ -2,9 +2,9 @@
   import { dashboards, selected_dashboard, type Dashboard } from "$lib/store/dashboard.store";
   import Modal from "$lib/components/Modal.svelte";
   import AddDashboard from "$lib/components/Prompts/AddDashboard.svelte";
-  import AddPerson from "$lib/components/Prompts/AddPerson.svelte";
   import EditDashboard from "$lib/components/Prompts/EditDashboard.svelte";
     import LeftPanelEntry from "./LeftPanelEntry.svelte";
+    import AddAccount from "$lib/components/Prompts/AddAccount.svelte";
 
   let show_add = $state(false);
   let show_edit_dashboard = $state(false);
@@ -20,7 +20,9 @@
     if(innerWidth > 1024 /* tailwindcss lg responsive width */ && is_open !== undefined) is_open = undefined
   })
 </script>
+
 <svelte:window bind:innerWidth></svelte:window>
+
 <section class="row-span-15 col-span-1 box-content overflow-hidden ">
   <nav class="bg-base-300 flex flex-col h-full px-6 py-9 transition-all animate__animated {classs} lg:static lg:!animate-none">
     {#key $selected_dashboard}
@@ -64,5 +66,5 @@
   <EditDashboard dashboard={dashboard_to_edit!} onremove={()=>show_edit_dashboard = false}></EditDashboard>
 </Modal>
 <Modal bind:open={show_add_person}>
-  <AddPerson dashboard={dashboard_to_edit!} onadd={()=>show_add_person = false}></AddPerson>
+  <AddAccount dashboard={dashboard_to_edit!} onadd={()=>show_add_person = false}></AddAccount>
  </Modal>

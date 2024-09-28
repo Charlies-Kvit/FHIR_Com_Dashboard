@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as d3 from "d3";
   import BarItem from "./BarItem.svelte";
-  import type { Summary } from "$lib/store/person.store";
+  import type { Summary } from "$lib/store/account.store";
 
   let { data, selected = $bindable(undefined) }  = $props<{ data:Summary[], selected: undefined|number }>()
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Person, Summary } from "$lib/store/person.store";
+  import type { Account, Summary } from "$lib/store/account.store";
   import { marked } from "marked";
   import { fade, fly, slide } from "svelte/transition";
 

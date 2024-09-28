@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Person, type Summary } from "$lib/store/person.store";
+  import { type Summary } from "$lib/store/account.store";
   import { fly, slide } from "svelte/transition";
   import BarChart from "../Diagram/BarChart.svelte";
 

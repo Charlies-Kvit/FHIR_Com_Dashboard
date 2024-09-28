@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type Person, persons } from "$lib/store/person.store";
+  import { type Account, accounts } from "$lib/store/account.store";
   import { type Dashboard } from "$lib/store/dashboard.store";
   import EditForm from "$lib/components/EditForm.svelte";
 
@@ -7,15 +7,16 @@
     dashboard: Dashboard;
     onadd: () => void;
   }>();
-  let person: Person = {
+  let account: Omit<Account, "id" | "summary"> = {
     avatar_url: "",
     name: "",
     email: "",
     group_id: dashboard.id,
+    zulip_id: 0,
   };
 
   const add_person = () => {
-    persons.add(person);
+    accounts.add(account);
     onadd();
   };
 </script>
@@ -24,19 +25,25 @@
   <input
     class="input"
     type="text"
-    bind:value={person.avatar_url}
+    bind:value={account.avatar_url}
     placeholder="Upload image"
   />
   <input
     class="input"
     type="text"
-    bind:value={person.name}
+    bind:value={account.name}
     placeholder="Name"
   />
   <input
     class="input"
     type="email"
-    bind:value={person.email}
+    bind:value={account.email}
+    placeholder="E-mail"
+  />
+  <input
+    class="input"
+    type="email"
+    bind:value={account.zulip_id}
     placeholder="E-mail"
   />
 </EditForm>
