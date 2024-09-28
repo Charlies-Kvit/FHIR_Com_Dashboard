@@ -1,4 +1,4 @@
-# FHIR_Com_Dashboard
+# FHIR_Com_Dashboard(BETA)
 
 ## How to launch backend
 1. ```git clone https://github.com/Charlies-Kvit/FHIR_Com_Dashboard```
