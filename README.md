@@ -222,7 +222,7 @@ Example response:
     "sh@gefyra.de": [
         {
             "timestamp": 12341224, 
-            "user_post_count": 25,
+            "account_post_count": 25,
             "title": "%patient vs. %subject",
             "id": 1,
             "account_id": 1,
@@ -231,7 +231,7 @@ Example response:
         },
         {
             "timestamp": 12341224,
-            "user_post_count": 13,
+            "account_post_count": 13,
             "title": "Usage of ElementDefintion.definition vs .comment",
             "id": 2,
             "account_id": 1,
@@ -240,7 +240,7 @@ Example response:
         },
         {
             "timestamp": 12341224,
-            "user_post_count": 8,
+            "account_post_count": 8,
             "title": "Observation based Questionnaire prepopulation",
             "id": 3,
             "account_id": 1,
@@ -249,7 +249,7 @@ Example response:
         },
         {
             "timestamp": 12341224,
-            "user_post_count": 2,
+            "account_post_count": 2,
             "title": "Start des Kommentierungsverfahrens für BfArM-Terminologien",
             "id": 4,
             "account_id": 1,
@@ -258,7 +258,7 @@ Example response:
         },
         {
             "timestamp": 12341224,
-            "user_post_count": 2,
+            "account_post_count": 2,
             "title": "[BFARM] ICD und OPS Versionsnummern",
             "id": 5,
             "account_id": 1,
