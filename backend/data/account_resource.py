@@ -28,7 +28,7 @@ def parse_new_account(email, zulip_id):
             account_email=email,
             account_post_count=el["count"],
             url=el["url"],
-            account_id=account.id
+            account_id=account.id,
         )
         db_sess.add(parse_result)
         db_sess.commit()
@@ -50,7 +50,11 @@ class AccountResource(Resource):
         account = db_sess.query(Account).get(account_id)
         db_sess.close()
         return jsonify(
-            {"account": account.to_dict(only=("id", "name", "email", "group_id", "avatar_url", "zulip_id"))}
+            {
+                "account": account.to_dict(
+                    only=("id", "name", "email", "group_id", "avatar_url", "zulip_id")
+                )
+            }
         )
 
     def put(self, account_id):
@@ -58,16 +62,20 @@ class AccountResource(Resource):
         db_sess = db_session.create_session()
         args = parser.parse_args()
         account = db_sess.query(Account).get(account_id)
-        account.name = args['name']
-        account.email = args['email']
-        account.group_id = args['group_id']
+        account.name = args["name"]
+        account.email = args["email"]
+        account.group_id = args["group_id"]
         account.avatar_url = args["avatar_url"]
         account.zulip_id = args["zulip_id"]
         db_sess.commit()
         account = db_sess.query(Account).get(account_id)
         db_sess.close()
         return jsonify(
-            {"account": account.to_dict(only=("id", "name", "email", "group_id", "avatar_url", "zulip_id"))}
+            {
+                "account": account.to_dict(
+                    only=("id", "name", "email", "group_id", "avatar_url", "zulip_id")
+                )
+            }
         )
 
     def delete(self, account_id):
@@ -85,28 +93,50 @@ class AccountListResource(Resource):
         db_sess = db_session.create_session()
         accounts = db_sess.query(Account).all()
         db_sess.close()
-        return jsonify({
-            "accounts":
-                [account.to_dict(only=("id", "name", "email", "group_id", "avatar_url", "zulip_id"))
-                 for account in accounts]
-        })
+        return jsonify(
+            {
+                "accounts": [
+                    account.to_dict(
+                        only=(
+                            "id",
+                            "name",
+                            "email",
+                            "group_id",
+                            "avatar_url",
+                            "zulip_id",
+                        )
+                    )
+                    for account in accounts
+                ]
+            }
+        )
 
     def post(self):
         db_sess = db_session.create_session()
         args = parser.parse_args()
         account = Account(
-            name=args['name'],
-            zulip_id=args['zulip_id'],
-            email=args['email'],
-            group_id=args['group_id'],
-            avatar_url=args["avatar_url"]
+            name=args["name"],
+            zulip_id=args["zulip_id"],
+            email=args["email"],
+            group_id=args["group_id"],
+            avatar_url=args["avatar_url"],
         )
         db_sess.add(account)
         db_sess.commit()
         account = db_sess.query(Account).filter(Account.email == args["email"]).first()
         db_sess.close()
-        parsing = Thread(target=parse_new_account, args=(args["email"], args['zulip_id'], ))
+        parsing = Thread(
+            target=parse_new_account,
+            args=(
+                args["email"],
+                args["zulip_id"],
+            ),
+        )
         parsing.start()
         return jsonify(
-            {"account": account.to_dict(only=("id", "name", "email", "group_id", "avatar_url", "zulip_id"))}
+            {
+                "account": account.to_dict(
+                    only=("id", "name", "email", "group_id", "avatar_url", "zulip_id")
+                )
+            }
         )

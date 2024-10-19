@@ -17,7 +17,9 @@ def update():
     for email in emails:
         if email not in result:
             continue
-        parse_results = db_sess.query(ParseResult).filter(ParseResult.account_email == email).all()
+        parse_results = (
+            db_sess.query(ParseResult).filter(ParseResult.account_email == email).all()
+        )
         for parse_result in parse_results:
             db_sess.delete(parse_result)
         db_sess.commit()
@@ -31,7 +33,7 @@ def update():
                 account_email=email,
                 account_post_count=el["count"],
                 url=el["url"],
-                account_id=account.id
+                account_id=account.id,
             )
             db_sess.add(parse_result)
             db_sess.commit()
