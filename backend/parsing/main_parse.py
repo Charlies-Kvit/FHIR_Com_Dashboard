@@ -1,6 +1,7 @@
 import zulip
 from openai import OpenAI
 from config.config import API_KEY_AI
+from app import logger
 
 
 def parse(emails, data):
@@ -12,6 +13,7 @@ def parse(emails, data):
     AI = OpenAI(api_key=API_KEY_AI, base_url="https://api.perplexity.ai")
     result = {}
     for email in emails:
+        logger.debug(f"Начинаю поиск по {email}")
         result[email] = []
         request = {
             "anchor": "newest",
@@ -23,8 +25,11 @@ def parse(emails, data):
             ],
         }
         answer = client.get_messages(request)
+        logger.debug(f"Результат поиска по {email}: {answer}")
         if "messages" not in answer:
+            logger.debug(f"Начинаю повторный поиск по айди пользователя: {email}")
             answer = client.get_user_by_id(data[email])
+            logger.debug(f"Данные юзера: {answer}")
             request = {
                 "anchor": "newest",
                 "num_before": 100,
@@ -35,6 +40,7 @@ def parse(emails, data):
                 ],
             }
             answer = client.get_messages(request)
+            logger.debug(f"Результат поиска по айди: {answer}")
             if "messages" not in answer:
                 continue
         stream_id_do = []
