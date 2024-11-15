@@ -34,16 +34,17 @@ def error_404(*_):
 def error_500(*_):
     return {"ERROR": "500, please, give a feedback on this email: theivangao@gmail.com"}, 500
 
-
-db_session.global_init(DATABASE)
-api.add_resource(AccountResource, "/api/accounts/<int:account_id>")
-api.add_resource(AccountListResource, "/api/accounts")
-api.add_resource(GroupResource, "/api/groups/<int:group_id>")
-api.add_resource(GroupListResource, "/api/groups")
-api.add_resource(ParseRequestResource, "/api/parsing/<int:account_id>")
-api.add_resource(ParseRequestListResource, "/api/parsing")
-api.init_app(app)
+def main():
+    db_session.global_init(DATABASE)
+    api.add_resource(AccountResource, "/api/accounts/<int:account_id>")
+    api.add_resource(AccountListResource, "/api/accounts")
+    api.add_resource(GroupResource, "/api/groups/<int:group_id>")
+    api.add_resource(GroupListResource, "/api/groups")
+    api.add_resource(ParseRequestResource, "/api/parsing/<int:account_id>")
+    api.add_resource(ParseRequestListResource, "/api/parsing")
+    api.init_app(app)
 
 if __name__ == '__main__':
+    main()
     if DEBUG:
         app.run(host=HOST, port=PORT, debug=DEBUG)
