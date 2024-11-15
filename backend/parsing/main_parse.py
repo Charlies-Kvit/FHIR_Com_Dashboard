@@ -8,7 +8,7 @@ def parse(emails, data):
         core = True
     else:
         core = False
-    client = zulip.Client(config_file="backend/config/zuliprc")
+    client = zulip.Client(config_file="config/zuliprc")
     AI = OpenAI(api_key=API_KEY_AI, base_url="https://api.perplexity.ai")
     result = {}
     for email in emails:
