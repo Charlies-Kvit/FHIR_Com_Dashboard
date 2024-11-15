@@ -6,15 +6,11 @@ from data.auto_update_parse import update
 from data.account_resource import AccountResource, AccountListResource
 from data.group_resource import GroupResource, GroupListResource
 from data.parse_resource import ParseRequestResource, ParseRequestListResource
-from config.config import HOST, PORT, DEBUG, DATABASE, TOKEN
-import logging
+from config.config import HOST, PORT, DEBUG, DATABASE, TOKEN, logging
 
 app = Flask(__name__)
 # swagger = Swagger(app)
 api = Api(app)
-logging.basicConfig(filename='logs/logs.log', filemode='a', encoding='utf-8')
-logger = logging.getLogger('flask')
-logger.setLevel(logging.DEBUG)
 
 
 @app.route("/ping")
