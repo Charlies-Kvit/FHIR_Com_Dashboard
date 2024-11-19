@@ -7,15 +7,15 @@ const config = {
 
   kit: {
     adapter: adapter(),
-    // files: {
-    //   routes: "src/app/routes",
-    //   lib: "src",
-    //   appTemplate: "src/app/index.html",
-    //   assets: "public",
-    // },
-    // alias: {
-    //   "@/*": "src/*", // Create an alias for the src directory
-    // },
+    files: {
+      routes: "src/app/routes",
+      lib: "src",
+      appTemplate: "src/app/index.html",
+      assets: "public",
+    },
+    alias: {
+      "@/*": "src/*", // Create an alias for the src directory
+    },
   },
 };
 
