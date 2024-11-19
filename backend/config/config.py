@@ -2,6 +2,7 @@ import random
 import string
 import os
 import json
+import logging
 from time import sleep
 from dotenv import load_dotenv
 from config.create_token import create_token
@@ -20,3 +21,5 @@ DEBUG = bool(int(os.environ.get('DEBUG')))
 DATABASE = 'db/db.sqlite'
 API_KEY_AI = os.environ.get('API_KEY_AI')
 TOKEN = json_data['token']
+logging.basicConfig(filename="logs/logs.log", filemode="a", level=logging.DEBUG,
+                    format="%(asctime)s %(levelname)s %(message)s")
