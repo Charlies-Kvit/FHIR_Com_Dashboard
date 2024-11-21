@@ -29,8 +29,7 @@ export default class Account {
 
   #summary: Summary[] = [];
   public get summary(): Promise<Summary[] | undefined> {
-    if (this.#summary.length != 0)
-      return new Promise((resolve, _) => resolve(this.#summary));
+    if (this.#summary.length != 0) return Promise.resolve(this.#summary);
 
     return fetch("/api/parsing", {
       method: "POST",
@@ -38,7 +37,11 @@ export default class Account {
         emails: [this.email],
         zulip_ids: [this.zulip_id],
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     }).then((r) => {
+      console.log(r);
       if (r.ok) {
         return fetch("/api/parsing/" + this.id).then(async (v) => {
           if (v.ok) {
